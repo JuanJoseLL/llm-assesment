@@ -1,3 +1,3 @@
-from .rag_chain import RAGChain
+from .rag_chain import ConversationalRAGChain
 
-__all__ = ["RAGChain"]
+__all__ = ["ConversationalRAGChain"]

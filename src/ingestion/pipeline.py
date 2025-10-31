@@ -19,6 +19,7 @@ class IngestionPipeline:
             chunk_overlap=chunk_overlap,
             separators=["\n\n", "\n", " ", ""],
             length_function=len,
+            add_start_index=True
         )
         self.api_key = api_key
 
