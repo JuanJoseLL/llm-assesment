@@ -141,6 +141,25 @@ Interactive API docs: http://localhost:8000/docs
 
 ## Usage
 
+### Testing with Postman Collection
+
+A ready-to-use Postman collection is included to test all 8 prompt strategies with the same question.
+
+**Import the collection:**
+1. Open Postman
+2. Click "Import" → "File" → Select `RAG_System_Prompts_Collection.postman_collection.json`
+3. The collection includes pre-configured requests for all strategies:
+   - Basic, Few-Shot, Chain-of-Thought
+   - Anti-Hallucination, Tree-of-Thoughts, Self-Consistency
+   - ReAct, Least-to-Most
+
+**Run all tests:**
+- Use Postman's Collection Runner to execute all 8 requests sequentially
+- Each request tests the same question: "What is the maximum takeoff weight of the AC4?"
+- Compare responses across strategies to evaluate effectiveness
+
+---
+
 ### Ingest Documents
 ```bash
 curl -X POST "http://localhost:8000/ingest" \

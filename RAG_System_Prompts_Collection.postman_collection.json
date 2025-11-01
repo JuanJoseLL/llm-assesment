@@ -1,0 +1,382 @@
+{
+	"info": {
+		"_postman_id": "rag-prompts-test-collection",
+		"name": "RAG System - Prompt Strategies Test",
+		"description": "Collection to test all prompt strategies with the same question",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Basic Prompt",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "question",
+							"value": "What is the maximum takeoff weight of the AC4?",
+							"type": "text"
+						},
+						{
+							"key": "session_id",
+							"value": "test-basic",
+							"type": "text"
+						},
+						{
+							"key": "prompt_strategy",
+							"value": "basic",
+							"type": "text"
+						},
+						{
+							"key": "stream",
+							"value": "false",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/query",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"query"
+					]
+				},
+				"description": "Test query using Basic prompt strategy"
+			},
+			"response": []
+		},
+		{
+			"name": "2. Few-Shot Prompt",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "question",
+							"value": "What is the maximum takeoff weight of the AC4?",
+							"type": "text"
+						},
+						{
+							"key": "session_id",
+							"value": "test-few-shot",
+							"type": "text"
+						},
+						{
+							"key": "prompt_strategy",
+							"value": "few-shot",
+							"type": "text"
+						},
+						{
+							"key": "stream",
+							"value": "false",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/query",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"query"
+					]
+				},
+				"description": "Test query using Few-Shot prompt strategy with examples"
+			},
+			"response": []
+		},
+		{
+			"name": "3. Chain-of-Thought Prompt",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "question",
+							"value": "What is the maximum takeoff weight of the AC4?",
+							"type": "text"
+						},
+						{
+							"key": "session_id",
+							"value": "test-cot",
+							"type": "text"
+						},
+						{
+							"key": "prompt_strategy",
+							"value": "chain-of-thought",
+							"type": "text"
+						},
+						{
+							"key": "stream",
+							"value": "false",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/query",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"query"
+					]
+				},
+				"description": "Test query using Chain-of-Thought prompt strategy with step-by-step reasoning"
+			},
+			"response": []
+		},
+		{
+			"name": "4. Anti-Hallucination Prompt",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "question",
+							"value": "What is the maximum takeoff weight of the AC4?",
+							"type": "text"
+						},
+						{
+							"key": "session_id",
+							"value": "test-anti-hallucination",
+							"type": "text"
+						},
+						{
+							"key": "prompt_strategy",
+							"value": "anti-hallucination",
+							"type": "text"
+						},
+						{
+							"key": "stream",
+							"value": "false",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/query",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"query"
+					]
+				},
+				"description": "Test query using Anti-Hallucination prompt strategy with strict rules"
+			},
+			"response": []
+		},
+		{
+			"name": "5. Tree of Thoughts Prompt",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "question",
+							"value": "What is the maximum takeoff weight of the AC4?",
+							"type": "text"
+						},
+						{
+							"key": "session_id",
+							"value": "test-tot",
+							"type": "text"
+						},
+						{
+							"key": "prompt_strategy",
+							"value": "tree-of-thoughts",
+							"type": "text"
+						},
+						{
+							"key": "stream",
+							"value": "false",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/query",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"query"
+					]
+				},
+				"description": "Test query using Tree of Thoughts prompt strategy with multiple reasoning paths"
+			},
+			"response": []
+		},
+		{
+			"name": "6. Self-Consistency Prompt",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "question",
+							"value": "What is the maximum takeoff weight of the AC4?",
+							"type": "text"
+						},
+						{
+							"key": "session_id",
+							"value": "test-self-consistency",
+							"type": "text"
+						},
+						{
+							"key": "prompt_strategy",
+							"value": "self-consistency",
+							"type": "text"
+						},
+						{
+							"key": "stream",
+							"value": "false",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/query",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"query"
+					]
+				},
+				"description": "Test query using Self-Consistency prompt strategy with multiple reasoning chains"
+			},
+			"response": []
+		},
+		{
+			"name": "7. ReAct Prompt",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "question",
+							"value": "What is the maximum takeoff weight of the AC4?",
+							"type": "text"
+						},
+						{
+							"key": "session_id",
+							"value": "test-react",
+							"type": "text"
+						},
+						{
+							"key": "prompt_strategy",
+							"value": "react",
+							"type": "text"
+						},
+						{
+							"key": "stream",
+							"value": "false",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/query",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"query"
+					]
+				},
+				"description": "Test query using ReAct prompt strategy (Reason + Act)"
+			},
+			"response": []
+		},
+		{
+			"name": "8. Least-to-Most Prompt",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "question",
+							"value": "What is the maximum takeoff weight of the AC4?",
+							"type": "text"
+						},
+						{
+							"key": "session_id",
+							"value": "test-least-to-most",
+							"type": "text"
+						},
+						{
+							"key": "prompt_strategy",
+							"value": "least-to-most",
+							"type": "text"
+						},
+						{
+							"key": "stream",
+							"value": "false",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/query",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"query"
+					]
+				},
+				"description": "Test query using Least-to-Most prompt strategy with question decomposition"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "test_question",
+			"value": "What is the maximum takeoff weight of the AC4?",
+			"type": "string"
+		}
+	]
+}
