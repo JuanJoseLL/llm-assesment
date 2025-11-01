@@ -6,6 +6,8 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.messages import HumanMessage, AIMessage
 
+from .prompts import get_prompt
+
 
 class ConversationalRAGChain:
     """
@@ -15,6 +17,7 @@ class ConversationalRAGChain:
     - Retrieval-Augmented Generation (RAG)
     - Conversational memory using LangChain message history
     - Multi-turn question answering
+    - Experimental prompt strategies (basic, few-shot, chain-of-thought, anti-hallucination)
     """
 
     def __init__(
@@ -23,11 +26,13 @@ class ConversationalRAGChain:
         model_name: str = "gpt-5-mini",
         temperature: float = 0,
         k: int = 4,
-        api_key: Optional[str] = None
+        api_key: Optional[str] = None,
+        prompt_strategy: str = "basic"
     ):
         self.vectorstore = vectorstore
         self.k = k
-        self.chat_history: List = []  # LangChain message history
+        self.chat_history: List = []  
+        self.prompt_strategy = prompt_strategy
 
         self.retriever = vectorstore.as_retriever(
             search_type="similarity",
@@ -40,17 +45,8 @@ class ConversationalRAGChain:
             api_key=api_key
         )
 
-        # Prompt with conversational memory support
-        self.prompt = ChatPromptTemplate.from_messages([
-            ("system", """You are a helpful assistant. Use the following context to answer the user's question.
-If you cannot find the answer in the context, say so clearly.
-You can reference previous conversation when relevant.
-
-Context:
-{context}"""),
-            MessagesPlaceholder(variable_name="chat_history"),
-            ("user", "{question}")
-        ])
+        
+        self.prompt = get_prompt(prompt_strategy)
 
         def format_docs(docs):
             return "\n\n".join(doc.page_content for doc in docs)
@@ -73,7 +69,7 @@ Context:
         """
         answer = self.chain.invoke(question)
 
-        # Store in conversational memory
+        
         self.chat_history.append(HumanMessage(content=question))
         self.chat_history.append(AIMessage(content=answer))
 
@@ -82,7 +78,7 @@ Context:
     def query_with_sources(self, question: str) -> Dict[str, Any]:
         """Query and return answer with source documents"""
         retrieved_docs = self.retriever.invoke(question)
-        answer = self.query(question)  # Uses conversational memory
+        answer = self.query(question)  
 
         sources = [
             {
@@ -104,7 +100,7 @@ Context:
             chunks.append(chunk)
             yield chunk
 
-        # Store in memory after streaming completes
+        
         full_answer = "".join(chunks)
         self.chat_history.append(HumanMessage(content=question))
         self.chat_history.append(AIMessage(content=full_answer))

@@ -70,7 +70,8 @@ async def ingest(file: UploadFile = File(...)):
 async def query(
     question: str = Form(...),
     session_id: str = Form(default="default"),
-    stream: bool = Form(False)
+    stream: bool = Form(False),
+    prompt_strategy: str = Form(default="basic")
 ):
     """
     Query with conversational memory support.
@@ -78,13 +79,17 @@ async def query(
     - question: The user's question
     - session_id: Session ID for conversation tracking (default: "default")
     - stream: Enable streaming response
+    - prompt_strategy: Prompt engineering strategy: "basic", "few-shot", "chain-of-thought", "anti-hallucination" (default: "basic")
     """
     if not OPENAI_API_KEY:
         raise HTTPException(status_code=500, detail="OPENAI_API_KEY not configured")
 
     try:
+        # Create session key with prompt strategy
+        session_key = f"{session_id}:{prompt_strategy}"
+
         # Get or create conversation session
-        if session_id not in conversation_sessions:
+        if session_key not in conversation_sessions:
             embeddings = OpenAIEmbeddings(
                 model="text-embedding-3-small",
                 api_key=OPENAI_API_KEY
@@ -96,12 +101,13 @@ async def query(
                 embedding_function=embeddings
             )
 
-            conversation_sessions[session_id] = ConversationalRAGChain(
+            conversation_sessions[session_key] = ConversationalRAGChain(
                 vectorstore=vectorstore,
-                api_key=OPENAI_API_KEY
+                api_key=OPENAI_API_KEY,
+                prompt_strategy=prompt_strategy
             )
 
-        rag = conversation_sessions[session_id]
+        rag = conversation_sessions[session_key]
 
         if stream:
             async def generate():
@@ -113,7 +119,8 @@ async def query(
             return {
                 "answer": result['answer'],
                 "sources": result['sources'],
-                "session_id": session_id
+                "session_id": session_id,
+                "prompt_strategy": prompt_strategy
             }
 
     except Exception as e:
